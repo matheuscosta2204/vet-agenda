@@ -1,17 +1,28 @@
-import {Button} from 'primereact/button';
-import 'primereact/resources/themes/vela-green/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+import { useEffect } from 'react';
+import Menu from './components/menu';
+import Content from './components/content';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import reducer from './reducers';
+import middleware from './middleware';
+import { loadUser } from './actions/authedUser';
+
+const store = createStore(reducer, middleware);
 
 const App = () => {
-  return (
-    <div className="p-d-flex p-jc-center p-ai-center">
-      <div className="card">
-        <Button label="Click" icon="pi pi-check" />        
-        <p>Number of Clicks: </p>
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        store.dispatch(loadUser());
+    }, [])
+
+    return (
+        <Provider store={store}>
+            <div className="p-d-flex">
+                <Menu />
+                <Content />
+            </div>
+        </Provider>
+    )
 }
 
 export default App;
