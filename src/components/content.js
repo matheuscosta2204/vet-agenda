@@ -1,22 +1,36 @@
-import logo from '../assets/images/pawprint.svg';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Switch, Route } from "react-router-dom";
+import PrivateRoute from './ui/privateRoute';
 
-const Content = () => {
-    if(true) {
+import EmptyPage from './emptyPage';
+import Home from './home';
+import Calendar from './calendar';
+
+const Content = ({ isAuthenticated }) => {
+    if(!isAuthenticated) {
         //not authenticated
-        return (
-            <div className="content-container p-d-flex p-flex-column p-jc-center p-ai-center">
-                <img src={logo} alt="logo" className="content-logo" />
-                <h1>VET AGENDA</h1>
-            </div>
-        )
+        return <EmptyPage />
     }
     return (
         <div className="layout-main">
-            {/* <Route path="/" exact component={Dashboard} />
-            <Route path="/formlayout" component={FormLayoutDemo} />
-            <Route path="/input" component={InputDemo} /> */}
+            <Switch>
+                <Route path="/" exact component={Home} />
+                <PrivateRoute path="/home" component={Home} />
+                <PrivateRoute path="/calendar" component={Calendar} />
+            </Switch>
         </div>
     )
 }
 
-export default Content;
+Content.propTypes = {
+    isAuthenticated: PropTypes.bool
+}
+
+function mapStateToProps({ auth }) {
+    return {
+        isAuthenticated: auth.isAuthenticated
+    }
+}
+
+export default connect(mapStateToProps)(Content);

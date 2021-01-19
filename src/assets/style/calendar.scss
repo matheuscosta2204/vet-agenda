@@ -1,0 +1,13 @@
+@import '@fullcalendar/core/main.css';
+@import '@fullcalendar/daygrid/main.css';
+@import '@fullcalendar/timegrid/main.css';
+
+.calendar-container {
+   height: 100vh;
+}
+
+.calendar-container .p-scrollpanel-bar {
+    background-color: #81C784;
+    opacity: 1;
+    transition: background-color .3s;
+}

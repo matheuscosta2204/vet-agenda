@@ -3,6 +3,7 @@ import Menu from './components/menu';
 import Content from './components/content';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from "react-router-dom";
 
 import reducer from './reducers';
 import middleware from './middleware';
@@ -17,10 +18,12 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <div className="p-d-flex">
-                <Menu />
-                <Content />
-            </div>
+            <Router>
+                <div className="p-d-flex">
+                    <Menu />
+                    <Content />
+                </div>
+            </Router>
         </Provider>
     )
 }

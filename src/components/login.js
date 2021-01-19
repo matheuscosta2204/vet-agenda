@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { connect } from 'react-redux';
@@ -24,6 +25,10 @@ const Login = ({ login }) => {
             </div>
         </div>
     )
+}
+
+Login.propTypes = {
+    login: PropTypes.func,
 }
 
 export default connect(null, { login })(Login);
