@@ -1,17 +1,22 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { FullCalendar } from 'primereact/fullcalendar';
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { Card } from 'primereact/card';
+import { Dialog } from 'primereact/dialog';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import ptLocale from '@fullcalendar/core/locales/pt-br';
 
+import CalendarDetails from './calendarDetails';
 import { loadEvents, changeDate } from '../actions/calendar';
 
 const Calendar = ({ date, events, loadEvents, changeDate }) => {
+    const [detaisDialog, setDetaisDialog] = useState(false);
+    const [currentEventId, setCurrentEventId] = useState(null);
+
     const calendarRef = useRef();
     useEffect(() => {
         loadEvents(date);
@@ -44,14 +49,26 @@ const Calendar = ({ date, events, loadEvents, changeDate }) => {
                 }
             }
         },
+        eventClick: function(info) {
+            setCurrentEventId(info.event.id);
+            setDetaisDialog(true);
+        }
+        // dateClick: function(info) {
+        //     console.log('Clicked on:', info);
+        // }
     };
 
     return (
-        <ScrollPanel className="calendar-container">
-            <Card title="Agenda" className="calendar-card">
-                <FullCalendar ref={calendarRef} events={events} options={options} />
-            </Card>
-        </ScrollPanel>
+        <>
+            <ScrollPanel className="calendar-container">
+                <Card title="Agenda" className="calendar-card">
+                    <FullCalendar ref={calendarRef} events={events} options={options} />
+                </Card>
+            </ScrollPanel>
+            <Dialog header="Detalhes" visible={detaisDialog} style={{ width: '50vw' }} onHide={() => setDetaisDialog(false)}>
+                <CalendarDetails id={currentEventId} />
+            </Dialog>
+        </>
     )
 }
 

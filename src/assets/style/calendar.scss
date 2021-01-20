@@ -11,3 +11,25 @@
     opacity: 1;
     transition: background-color .3s;
 }
+
+.event-info h3, h4, h5, p, .skeleton-text {
+    margin: 0 0 3px 10px;
+}
+
+.personal-info-avatar {
+    width: 7rem;
+    height: 7rem;
+}
+
+.event-pet-info {
+    margin-left: 15rem;
+}
+
+.pet-info-avatar {
+    width: 10rem;
+    height: 10rem;
+}
+
+.event-general-info {
+    margin-top: 5rem;
+}
